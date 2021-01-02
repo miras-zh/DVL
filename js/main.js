@@ -51,19 +51,26 @@ function notAuthorized() {
   console.log("not autorized");
 
   function logIn(event) {
-    console.log("login");
-    event.preventDefault();
-    login = loginInput.value;
+    if (loginInput.value) {
+        console.log("login");
+        event.preventDefault();
+        login = loginInput.value;
 
-    localStorage.setItem("DVLStorage", login);
+        localStorage.setItem("DVLStorage", login);
+        localStorage.setItem("f.login", JSON.stringify(login))
 
-    console.log(login);
-    toggleModalAuth();
-    authButton.removeEventListener("click", toggleModalAuth);
-    closeButtonAuth.removeEventListener("click", toggleModalAuth);
-    loginForm.removeEventListener("submit", logIn);
-    loginInput.value = "";
-    chekcAuth();
+        console.log(login);
+        toggleModalAuth();
+        authButton.removeEventListener("click", toggleModalAuth);
+        closeButtonAuth.removeEventListener("click", toggleModalAuth);
+        loginForm.removeEventListener("submit", logIn);
+        loginForm.reset();
+        loginInput.value = "";
+        chekcAuth();
+    } else
+     {
+      console.log('не ввели логин или пароль')
+    }
   }
 
   authButton.addEventListener("click", toggleModalAuth);
@@ -78,4 +85,18 @@ function chekcAuth() {
     notAuthorized();
   }
 }
+
+
+
 chekcAuth();
+
+
+const a_object = {
+  hi: 'hello worls'
+}
+
+let test_obj = null;
+
+localStorage.setItem('store', JSON.stringify(a_object));
+test_obj = JSON.parse(localStorage.getItem('store'));
+console.log('test object >> ' + test_obj)
