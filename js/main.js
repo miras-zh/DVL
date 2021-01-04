@@ -12,8 +12,8 @@ function toggleModal() {
   modal.classList.toggle("is-open");
 }
 
-function clearForm(){
-  loginInput.style.borderColor = '';
+function clearForm() {
+  loginInput.style.borderColor = "";
 }
 
 // day 1
@@ -29,7 +29,7 @@ const outButton = document.querySelector(".button-out");
 
 function toggleModalAuth() {
   authModal.classList.toggle("is-open");
-  loginInput.style.borderColor = ''
+  loginInput.style.borderColor = "";
 }
 
 console.dir(authModal);
@@ -57,39 +57,47 @@ function notAuthorized() {
   console.log("not autorized");
   function logIn(event) {
     event.preventDefault();
-    loginInput.style.borderColor = '';
+    loginInput.style.borderColor = "";
     if (loginInput.value.trim()) {
-        console.log("login");
-        login = loginInput.value;
+      console.log("login");
+      login = loginInput.value;
 
-        localStorage.setItem("DVLStorage", login);
-        localStorage.setItem("f.login", JSON.stringify(login))
+      localStorage.setItem("DVLStorage", login);
+      localStorage.setItem("f.login", JSON.stringify(login));
 
-        console.log(login);
-        toggleModalAuth();
-        authButton.removeEventListener("click", toggleModalAuth);
-        closeButtonAuth.removeEventListener("click", toggleModalAuth);
-        loginForm.removeEventListener("submit", logIn);
-        loginForm.reset();
+      console.log(login);
+      toggleModalAuth();
+      authButton.removeEventListener("click", toggleModalAuth);
+      closeButtonAuth.removeEventListener("click", toggleModalAuth);
+      loginForm.removeEventListener("submit", logIn);
+      loginForm.reset();
+      loginInput.value = "";
+      chekcAuth();
+    } else {
+      loginInput.style.borderColor = "red";
+      setTimeout(() => {
+        loginInput.value = "введите логин";
+        loginInput.style.colorText = "red";
+      }, 1);
+      setTimeout(() => {
         loginInput.value = "";
-        chekcAuth();
-    } else
-     {
-      loginInput.style.borderColor = 'red';
-      loginInput.value = ''
-      setInterval(()=>{loginInput.style.borderColor = ''},5000)
+        loginInput.style.colorText = "";
+      }, 500);
+      setTimeout(() => {
+        loginInput.style.borderColor = "";
+      }, 500);
     }
   }
   authButton.addEventListener("click", toggleModalAuth);
-  authButton.addEventListener('click',clearForm)
+  authButton.addEventListener("click", clearForm);
   closeButtonAuth.addEventListener("click", toggleModalAuth);
   loginForm.addEventListener("submit", logIn);
-  authModal.addEventListener('click',function(event){
-    console.log(event.target)
-    if(event.target.classList.contains('is-open')){
-        toggleModalAuth();
+  authModal.addEventListener("click", function (event) {
+    console.log(event.target);
+    if (event.target.classList.contains("is-open")) {
+      toggleModalAuth();
     }
-  })
+  });
 }
 
 function chekcAuth() {
@@ -100,5 +108,3 @@ function chekcAuth() {
   }
 }
 chekcAuth();
-
-
