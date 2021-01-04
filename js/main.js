@@ -11,6 +11,11 @@ close.addEventListener("click", toggleModal);
 function toggleModal() {
   modal.classList.toggle("is-open");
 }
+
+function clearForm(){
+  loginInput.style.borderColor = '';
+}
+
 // day 1
 const authButton = document.querySelector(".button-auth");
 const authModal = document.querySelector(".modal-auth");
@@ -24,6 +29,7 @@ const outButton = document.querySelector(".button-out");
 
 function toggleModalAuth() {
   authModal.classList.toggle("is-open");
+  loginInput.style.borderColor = ''
 }
 
 console.dir(authModal);
@@ -49,11 +55,11 @@ function authorized() {
 
 function notAuthorized() {
   console.log("not autorized");
-
   function logIn(event) {
-    if (loginInput.value) {
+    event.preventDefault();
+    loginInput.style.borderColor = '';
+    if (loginInput.value.trim()) {
         console.log("login");
-        event.preventDefault();
         login = loginInput.value;
 
         localStorage.setItem("DVLStorage", login);
@@ -69,13 +75,21 @@ function notAuthorized() {
         chekcAuth();
     } else
      {
-      console.log('не ввели логин или пароль')
+      loginInput.style.borderColor = 'red';
+      loginInput.value = ''
+      setInterval(()=>{loginInput.style.borderColor = ''},5000)
     }
   }
-
   authButton.addEventListener("click", toggleModalAuth);
+  authButton.addEventListener('click',clearForm)
   closeButtonAuth.addEventListener("click", toggleModalAuth);
   loginForm.addEventListener("submit", logIn);
+  authModal.addEventListener('click',function(event){
+    console.log(event.target)
+    if(event.target.classList.contains('is-open')){
+        toggleModalAuth();
+    }
+  })
 }
 
 function chekcAuth() {
@@ -85,18 +99,6 @@ function chekcAuth() {
     notAuthorized();
   }
 }
-
-
-
 chekcAuth();
 
 
-const a_object = {
-  hi: 'hello worls'
-}
-
-let test_obj = null;
-
-localStorage.setItem('store', JSON.stringify(a_object));
-test_obj = JSON.parse(localStorage.getItem('store'));
-console.log('test object >> ' + test_obj)
