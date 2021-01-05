@@ -30,6 +30,11 @@ const outButton = document.querySelector(".button-out");
 function toggleModalAuth() {
   authModal.classList.toggle("is-open");
   loginInput.style.borderColor = "";
+  if (authModal.classList.contains("is-open")) {
+    disableScroll();
+  } else {
+    enableScroll();
+  }
 }
 
 console.dir(authModal);
