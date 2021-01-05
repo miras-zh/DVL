@@ -27,6 +27,8 @@ const passwordInput = document.querySelector("#password");
 const userName = document.querySelector(".user-name");
 const outButton = document.querySelector(".button-out");
 
+const cardsRestaurants = document.querySelector(".cards-restaurants");
+
 function toggleModalAuth() {
   authModal.classList.toggle("is-open");
   loginInput.style.borderColor = "";
@@ -113,3 +115,30 @@ function chekcAuth() {
   }
 }
 chekcAuth();
+
+// day 2
+
+function createCardReastaurant() {
+  const card = `
+          <a href="#" class="card card-restaurant">
+              <img src="img/pizza-plus/preview.jpg" alt="image" class="" />
+              <div class="card-text">
+                <!-- / card heading -->
+                <div class="card-heading">
+                  <h3 class="card-title">Пицца Тануки</h3>
+                  <span class="card-tag tag">40мин</span>
+                </div>
+                <!--card info -->
+                <div class="card-info">
+                  <div class="rating">5.0</div>
+                  <div class="price">от 2000 тнг</div>
+                  <div class="category">Пицца</div>
+                </div>
+              </div>
+            </a>
+  `;
+
+  cardsRestaurants.insertAdjacentHTML("afterbegin", card);
+}
+
+createCardReastaurant();
