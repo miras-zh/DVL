@@ -28,6 +28,11 @@ const userName = document.querySelector(".user-name");
 const outButton = document.querySelector(".button-out");
 
 const cardsRestaurants = document.querySelector(".cards-restaurants");
+const containerPromo = document.querySelector('.container-promo')
+const restaurants = document.querySelector('.restaurants')
+const menu = document.querySelector('.menu');
+const logo = document.querySelector('.logo')
+
 
 function toggleModalAuth() {
   authModal.classList.toggle("is-open");
@@ -138,7 +143,27 @@ function createCardReastaurant() {
             </a>
   `;
 
-  cardsRestaurants.insertAdjacentHTML("afterbegin", card);
+  cardsRestaurants.insertAdjacentHTML("beforeend", card);
 }
 
 createCardReastaurant();
+createCardReastaurant();
+createCardReastaurant();
+
+function openGoods(event){
+  const target = event.target
+  const restaurant = target.closest('.card-restaurant');
+  if(restaurant){
+    console.log('restaurant:',restaurant);
+    containerPromo.classList.add('hide');
+    restaurants.classList.add('hide');
+    menu.classList.remove('hide');
+  }
+}
+
+cardsRestaurants.addEventListener('click',openGoods);
+logo.addEventListener('click',function(){
+  containerPromo.classList.remove('hide');
+    restaurants.classList.remove('hide');
+    menu.classList.add('hide');
+})
