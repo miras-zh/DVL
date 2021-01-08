@@ -28,11 +28,11 @@ const userName = document.querySelector(".user-name");
 const outButton = document.querySelector(".button-out");
 
 const cardsRestaurants = document.querySelector(".cards-restaurants");
-const containerPromo = document.querySelector('.container-promo')
-const restaurants = document.querySelector('.restaurants')
-const menu = document.querySelector('.menu');
-const logo = document.querySelector('.logo')
-
+const containerPromo = document.querySelector(".container-promo");
+const restaurants = document.querySelector(".restaurants");
+const menu = document.querySelector(".menu");
+const logo = document.querySelector(".logo");
+const cardsMenu = document.querySelector(".cards-menu");
 
 function toggleModalAuth() {
   authModal.classList.toggle("is-open");
@@ -150,20 +150,52 @@ createCardReastaurant();
 createCardReastaurant();
 createCardReastaurant();
 
-function openGoods(event){
-  const target = event.target
-  const restaurant = target.closest('.card-restaurant');
-  if(restaurant){
-    console.log('restaurant:',restaurant);
-    containerPromo.classList.add('hide');
-    restaurants.classList.add('hide');
-    menu.classList.remove('hide');
-  }
+function createCardGood() {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.insertAdjacentHTML(
+    "beforeend",
+    `
+            <img src="img/pizza-plus/pizza-classic.jpg" alt="image" class="card-image"/>
+              <div class="card-text">
+                <div class="card-heading">
+                  <h3 class="card-title card-title-reg">Пицца Классика</h3>
+                </div>
+                <!-- /.card-heading -->
+                <div class="card-info">
+                  <div class="ingredients">Соус томатный, сыр «Моцарелла», сыр «Пармезан», ветчина, салями,                                           грибы.
+                  </div>
+                </div>
+                <!-- /.card-info -->
+                <div class="card-buttons">
+                  <button class="button button-primary button-add-cart">
+                    <span class="button-card-text">В корзину</span>
+                    <span class="button-cart-svg"></span>
+                  </button>
+                  <strong class="card-price-bold">510 ₽</strong>
+                </div>
+              </div>
+              <!-- /.card-text -->
+    `,
+  );
+  cardsMenu.insertAdjacentElement("beforeend", card);
 }
 
-cardsRestaurants.addEventListener('click',openGoods);
-logo.addEventListener('click',function(){
-  containerPromo.classList.remove('hide');
-    restaurants.classList.remove('hide');
-    menu.classList.add('hide');
-})
+function openGoods(event) {
+  const target = event.target;
+  const restaurant = target.closest(".card-restaurant");
+  if (restaurant) {
+    console.log("restaurant:", restaurant);
+    containerPromo.classList.add("hide");
+    restaurants.classList.add("hide");
+    menu.classList.remove("hide");
+  }
+  createCardGood();
+}
+
+cardsRestaurants.addEventListener("click", openGoods);
+logo.addEventListener("click", function () {
+  containerPromo.classList.remove("hide");
+  restaurants.classList.remove("hide");
+  menu.classList.add("hide");
+});
