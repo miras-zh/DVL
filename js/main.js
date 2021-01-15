@@ -184,6 +184,7 @@ logo.addEventListener("click", function () {
   menu.classList.add("hide");
 });
 
-chekcAuth();
+
+chekcAuth(); 
 createCardReastaurant();
 createCardReastaurant();
