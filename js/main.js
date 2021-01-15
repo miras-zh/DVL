@@ -148,7 +148,6 @@ function createCardReastaurant() {
 
 createCardReastaurant();
 createCardReastaurant();
-createCardReastaurant();
 
 function createCardGood() {
   const card = document.createElement("div");
@@ -161,21 +160,18 @@ function createCardGood() {
                 <div class="card-heading">
                   <h3 class="card-title card-title-reg">Пицца Классика</h3>
                 </div>
-                <!-- /.card-heading -->
                 <div class="card-info">
                   <div class="ingredients">Соус томатный, сыр «Моцарелла», сыр «Пармезан», ветчина, салями,                                           грибы.
                   </div>
                 </div>
-                <!-- /.card-info -->
                 <div class="card-buttons">
                   <button class="button button-primary button-add-cart">
                     <span class="button-card-text">В корзину</span>
                     <span class="button-cart-svg"></span>
                   </button>
-                  <strong class="card-price-bold">510 ₽</strong>
+                  <strong class="card-price-bold">1500 T</strong>
                 </div>
               </div>
-              <!-- /.card-text -->
     `,
   );
   cardsMenu.insertAdjacentElement("beforeend", card);
@@ -189,8 +185,9 @@ function openGoods(event) {
     containerPromo.classList.add("hide");
     restaurants.classList.add("hide");
     menu.classList.remove("hide");
+    cardsMenu.textContent = "";
+    createCardGood();
   }
-  createCardGood();
 }
 
 cardsRestaurants.addEventListener("click", openGoods);
