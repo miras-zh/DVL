@@ -4,35 +4,24 @@ const cartButton = document.querySelector("#cart-button");
 const modal = document.querySelector(".modal");
 const close = document.querySelector(".close");
 let login = localStorage.getItem("DVLStorage");
-
-cartButton.addEventListener("click", toggleModal);
-close.addEventListener("click", toggleModal);
-
-function toggleModal() {
-  modal.classList.toggle("is-open");
-}
-
-function clearForm() {
-  loginInput.style.borderColor = "";
-}
-
-// day 1
 const authButton = document.querySelector(".button-auth");
 const authModal = document.querySelector(".modal-auth");
 const closeButtonAuth = document.querySelector(".close-auth");
 const loginForm = document.querySelector("#logInForm");
 const loginInput = document.querySelector("#login");
 const passwordInput = document.querySelector("#password");
-
 const userName = document.querySelector(".user-name");
 const outButton = document.querySelector(".button-out");
-
 const cardsRestaurants = document.querySelector(".cards-restaurants");
 const containerPromo = document.querySelector(".container-promo");
 const restaurants = document.querySelector(".restaurants");
 const menu = document.querySelector(".menu");
 const logo = document.querySelector(".logo");
 const cardsMenu = document.querySelector(".cards-menu");
+
+function toggleModal() {
+  modal.classList.toggle("is-open");
+}
 
 function toggleModalAuth() {
   authModal.classList.toggle("is-open");
@@ -44,7 +33,9 @@ function toggleModalAuth() {
   }
 }
 
-console.dir(authModal);
+function clearForm() {
+  loginInput.style.borderColor = "";
+}
 
 function authorized() {
   function logOut() {
@@ -119,9 +110,7 @@ function chekcAuth() {
     notAuthorized();
   }
 }
-chekcAuth();
 
-// day 2
 
 function createCardReastaurant() {
   const card = `
@@ -145,9 +134,6 @@ function createCardReastaurant() {
 
   cardsRestaurants.insertAdjacentHTML("beforeend", card);
 }
-
-createCardReastaurant();
-createCardReastaurant();
 
 function createCardGood() {
   const card = document.createElement("div");
@@ -189,10 +175,15 @@ function openGoods(event) {
     createCardGood();
   }
 }
-
+cartButton.addEventListener("click", toggleModal);
+close.addEventListener("click", toggleModal);
 cardsRestaurants.addEventListener("click", openGoods);
 logo.addEventListener("click", function () {
   containerPromo.classList.remove("hide");
   restaurants.classList.remove("hide");
   menu.classList.add("hide");
 });
+
+chekcAuth();
+createCardReastaurant();
+createCardReastaurant();
