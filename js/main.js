@@ -111,7 +111,6 @@ function chekcAuth() {
   }
 }
 
-
 function createCardReastaurant() {
   const card = `
           <a href="#" class="card card-restaurant">
@@ -147,7 +146,7 @@ function createCardGood() {
                   <h3 class="card-title card-title-reg">Пицца Классика</h3>
                 </div>
                 <div class="card-info">
-                  <div class="ingredients">Соус томатный, сыр «Моцарелла», сыр «Пармезан», ветчина, салями,                                           грибы.
+                  <div class="ingredients">Соус томатный, сыр «Моцарелла», сыр «Пармезан», ветчина, салями, грибы.
                   </div>
                 </div>
                 <div class="card-buttons">
@@ -165,14 +164,18 @@ function createCardGood() {
 
 function openGoods(event) {
   const target = event.target;
-  const restaurant = target.closest(".card-restaurant");
-  if (restaurant) {
-    console.log("restaurant:", restaurant);
-    containerPromo.classList.add("hide");
-    restaurants.classList.add("hide");
-    menu.classList.remove("hide");
-    cardsMenu.textContent = "";
-    createCardGood();
+  if (login) {
+    const restaurant = target.closest(".card-restaurant");
+    if (restaurant) {
+      console.log("restaurant:", restaurant);
+      containerPromo.classList.add("hide");
+      restaurants.classList.add("hide");
+      menu.classList.remove("hide");
+      cardsMenu.textContent = "";
+      createCardGood();
+    }
+  } else {
+    toggleModalAuth();
   }
 }
 cartButton.addEventListener("click", toggleModal);
@@ -184,7 +187,10 @@ logo.addEventListener("click", function () {
   menu.classList.add("hide");
 });
 
+chekcAuth();
+createCardReastaurant();
+createCardReastaurant();
 
-chekcAuth(); 
-createCardReastaurant();
-createCardReastaurant();
+//slider
+
+new Swiper = 
