@@ -19,6 +19,13 @@ const menu = document.querySelector(".menu");
 const logo = document.querySelector(".logo");
 const cardsMenu = document.querySelector(".cards-menu");
 
+const getData = async function(url){
+  const response  =await fetch(url);
+  console.log(response.json());
+};
+
+getData('./db/partners.json');
+
 function validName(str){
   const regName = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/;
   return regName.test(str);
