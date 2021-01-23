@@ -19,6 +19,11 @@ const menu = document.querySelector(".menu");
 const logo = document.querySelector(".logo");
 const cardsMenu = document.querySelector(".cards-menu");
 
+function validName(str){
+  const regName = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/;
+  return regName.test(str);
+}
+
 function toggleModal() {
   modal.classList.toggle("is-open");
 }
@@ -48,7 +53,6 @@ function authorized() {
     outButton.removeEventListener("click", logOut);
     chekcAuth();
   }
-  console.log("autorized");
   userName.textContent = login;
   authButton.style.display = "none";
   userName.style.display = "inline";
@@ -57,18 +61,13 @@ function authorized() {
 }
 
 function notAuthorized() {
-  console.log("not autorized");
   function logIn(event) {
     event.preventDefault();
     loginInput.style.borderColor = "";
-    if (loginInput.value.trim()) {
-      console.log("login");
+    if (validName(loginInput.value)) {
       login = loginInput.value;
-
       localStorage.setItem("DVLStorage", login);
       localStorage.setItem("f.login", JSON.stringify(login));
-
-      console.log(login);
       toggleModalAuth();
       authButton.removeEventListener("click", toggleModalAuth);
       closeButtonAuth.removeEventListener("click", toggleModalAuth);
@@ -96,7 +95,6 @@ function notAuthorized() {
   closeButtonAuth.addEventListener("click", toggleModalAuth);
   loginForm.addEventListener("submit", logIn);
   authModal.addEventListener("click", function (event) {
-    console.log(event.target);
     if (event.target.classList.contains("is-open")) {
       toggleModalAuth();
     }
