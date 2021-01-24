@@ -119,8 +119,6 @@ function chekcAuth() {
 }
 
 function createCardReastaurant(rest) {
-  console.log(rest);
-
   const {
     image,
     kitchen,
@@ -130,8 +128,12 @@ function createCardReastaurant(rest) {
     products,
     time_of_delivery,
   } = rest;
+
+  const cardRest = document.createElement("a");
+  cardRest.className = "card card-restaurant";
+  cardRest.product = products;
+
   const card = `
-          <a href="#" class="card card-restaurant" data-product="${products}">
               <img src="${image}" alt="image" class="" />
               <div class="card-text">
                 <!-- / card heading -->
@@ -146,15 +148,13 @@ function createCardReastaurant(rest) {
                   <div class="category">${kitchen}</div>
                 </div>
               </div>
-            </a>
   `;
 
-  cardsRestaurants.insertAdjacentHTML("beforeend", card);
+  cardRest.insertAdjacentHTML("beforeend", card);
+  cardsRestaurants.insertAdjacentElement("beforeend", cardRest);
 }
 
 function createCardGood(dataCard) {
-  console.log("data >>> ", dataCard);
-
   const { name, description, id, price, image } = dataCard;
 
   const card = document.createElement("div");
@@ -189,8 +189,8 @@ function openGoods(event) {
   if (login) {
     const restaurant = target.closest(".card-restaurant");
     if (restaurant) {
-      console.log(restaurant.dataset.product);
-      getData(`./db/${restaurant.dataset.product}`).then(function (data) {
+      console.dir(restaurant);
+      getData(`./db/${restaurant.product}`).then(function (data) {
         data.forEach(createCardGood);
       });
 
