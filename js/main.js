@@ -19,6 +19,11 @@ const menu = document.querySelector(".menu");
 const logo = document.querySelector(".logo");
 const cardsMenu = document.querySelector(".cards-menu");
 
+const restaurantTitle = document.querySelector(".restaurant-title");
+const restaurantRating = document.querySelector(".rating");
+const restaurantPrice = document.querySelector(".price");
+const restaurantCategory = document.querySelector(".category");
+
 const getData = async function (url) {
   const response = await fetch(url);
   if (!response.ok) {
@@ -118,20 +123,19 @@ function chekcAuth() {
   }
 }
 
-function createCardReastaurant(rest) {
-  const {
-    image,
-    kitchen,
-    name,
-    price,
-    stars,
-    products,
-    time_of_delivery,
-  } = rest;
-
+function createCardReastaurant({
+  image,
+  kitchen,
+  name,
+  price,
+  stars,
+  products,
+  time_of_delivery,
+}) {
   const cardRest = document.createElement("a");
   cardRest.className = "card card-restaurant";
-  cardRest.product = products;
+  cardRest.products = products;
+  cardRest.info = { kitchen, name, price, stars };
 
   const card = `
               <img src="${image}" alt="image" class="" />
@@ -154,9 +158,7 @@ function createCardReastaurant(rest) {
   cardsRestaurants.insertAdjacentElement("beforeend", cardRest);
 }
 
-function createCardGood(dataCard) {
-  const { name, description, id, price, image } = dataCard;
-
+function createCardGood({ name, description, id, price, image }) {
   const card = document.createElement("div");
   card.className = "card";
   card.insertAdjacentHTML(
@@ -190,7 +192,7 @@ function openGoods(event) {
     const restaurant = target.closest(".card-restaurant");
     if (restaurant) {
       console.dir(restaurant);
-      getData(`./db/${restaurant.product}`).then(function (data) {
+      getData(`./db/${restaurant.products}`).then(function (data) {
         data.forEach(createCardGood);
       });
 
@@ -198,6 +200,11 @@ function openGoods(event) {
       restaurants.classList.add("hide");
       menu.classList.remove("hide");
       cardsMenu.textContent = "";
+
+      restaurantTitle.textContent = `${restaurant.info.name}`;
+      restaurantRating.textContent = `${restaurant.info.stars}`;
+      restaurantPrice.textContent = `От ${restaurant.info.price} Т`;
+      restaurantCategory.textContent = `${restaurant.info.kitchen}`;
     }
   } else {
     toggleModalAuth();
