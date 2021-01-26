@@ -23,6 +23,7 @@ const restaurantTitle = document.querySelector(".restaurant-title");
 const restaurantRating = document.querySelector(".rating");
 const restaurantPrice = document.querySelector(".price");
 const restaurantCategory = document.querySelector(".category");
+const inputSearch = document.querySelector(".input-search");
 
 const getData = async function (url) {
   const response = await fetch(url);
@@ -192,19 +193,23 @@ function openGoods(event) {
     const restaurant = target.closest(".card-restaurant");
     if (restaurant) {
       console.dir(restaurant);
-      getData(`./db/${restaurant.products}`).then(function (data) {
-        data.forEach(createCardGood);
-      });
 
       containerPromo.classList.add("hide");
       restaurants.classList.add("hide");
       menu.classList.remove("hide");
       cardsMenu.textContent = "";
 
+      const { name, kitchen, price, stars } = restaurant.info;
+
       restaurantTitle.textContent = `${restaurant.info.name}`;
       restaurantRating.textContent = `${restaurant.info.stars}`;
       restaurantPrice.textContent = `От ${restaurant.info.price} Т`;
       restaurantCategory.textContent = `${restaurant.info.kitchen}`;
+      location.hash = `#${name}`;
+
+      getData(`./db/${restaurant.products}`).then(function (data) {
+        data.forEach(createCardGood);
+      });
     }
   } else {
     toggleModalAuth();
@@ -245,6 +250,24 @@ function init() {
       el: ".swiper-scrollbar",
       draggable: true,
     },
+  });
+
+  inputSearch.addEventListener("keypress", function (event) {
+    console.log(event);
+    if (event.charCode === 13) {
+      getData("./db/partners.json")
+        .then(function (data) {
+          return data.map(function (part) {
+            return part.products;
+          });
+        })
+        .then(function (linksPorduct) {
+          console.log(linksPorduct);
+          linksPorduct.forEach(function (link) {
+            getData(`./db/${link}`);
+          });
+        });
+    }
   });
 }
 
