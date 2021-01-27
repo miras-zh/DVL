@@ -205,7 +205,7 @@ function openGoods(event) {
       restaurantRating.textContent = `${restaurant.info.stars}`;
       restaurantPrice.textContent = `От ${restaurant.info.price} Т`;
       restaurantCategory.textContent = `${restaurant.info.kitchen}`;
-      location.hash = `#${name}`;
+      //location.hash = `#${name}`;
 
       getData(`./db/${restaurant.products}`).then(function (data) {
         data.forEach(createCardGood);
@@ -255,6 +255,9 @@ function init() {
   inputSearch.addEventListener("keypress", function (event) {
     console.log(event);
     if (event.charCode === 13) {
+      const value = event.target.value;
+      console.log(value)
+
       getData("./db/partners.json")
         .then(function (data) {
           return data.map(function (part) {
@@ -262,9 +265,26 @@ function init() {
           });
         })
         .then(function (linksPorduct) {
-          console.log(linksPorduct);
+          cardsMenu.textContent = "";
           linksPorduct.forEach(function (link) {
-            getData(`./db/${link}`);
+            getData(`./db/${link}`).then(function(data){
+              
+              const resultSearch = data.filter(function(item){
+                const name = item.name.toLowerCase()
+                return name.includes(value.toLowerCase( ))
+              })
+
+              containerPromo.classList.add("hide");
+              restaurants.classList.add("hide");
+              menu.classList.remove("hide");
+
+              restaurantTitle.textContent = `Результат Поиска`;
+              restaurantRating.textContent = ``;
+              restaurantPrice.textContent = ``;
+              restaurantCategory.textContent = ``;
+
+              resultSearch.forEach(createCardGood)
+            })
           });
         });
     }
