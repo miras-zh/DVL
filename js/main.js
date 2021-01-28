@@ -25,6 +25,8 @@ const restaurantPrice = document.querySelector(".price");
 const restaurantCategory = document.querySelector(".category");
 const inputSearch = document.querySelector(".input-search");
 
+const cart = [];
+
 const getData = async function (url) {
   const response = await fetch(url);
   if (!response.ok) {
@@ -65,13 +67,16 @@ function authorized() {
     authButton.style.display = "";
     userName.style.display = "";
     outButton.style.display = "";
+    cartButton.style.display = "";
     outButton.removeEventListener("click", logOut);
     chekcAuth();
   }
   userName.textContent = login;
   authButton.style.display = "none";
   userName.style.display = "inline";
-  outButton.style.display = "block";
+  outButton.style.display = "flex";
+  cartButton.style.display = "flex";
+
   outButton.addEventListener("click", logOut);
 }
 
@@ -216,12 +221,19 @@ function openGoods(event) {
   }
 }
 
+function addToCart(event) {
+  const targety = event.target;
+  const buttonAddToCart = targety.closest(".button-add-cart");
+  console.log(buttonAddToCart);
+}
+
 function init() {
   getData("./db/partners.json").then(function (data) {
     data.forEach(createCardReastaurant);
   });
 
   cartButton.addEventListener("click", toggleModal);
+  cardsMenu.addEventListener("click", addToCart);
   close.addEventListener("click", toggleModal);
   cardsRestaurants.addEventListener("click", openGoods);
   logo.addEventListener("click", function () {
@@ -255,9 +267,15 @@ function init() {
   inputSearch.addEventListener("keypress", function (event) {
     console.log(event);
     if (event.charCode === 13) {
-      const value = event.target.value;
-      console.log(value)
-
+      const value = event.target.value.trim();
+      if (!value) {
+        event.target.style.backgroundColor = "red";
+        event.target.value = "";
+        setTimeout(function () {
+          event.target.style.backgroundColor = "";
+        }, 900);
+        return;
+      }
       getData("./db/partners.json")
         .then(function (data) {
           return data.map(function (part) {
@@ -267,12 +285,11 @@ function init() {
         .then(function (linksPorduct) {
           cardsMenu.textContent = "";
           linksPorduct.forEach(function (link) {
-            getData(`./db/${link}`).then(function(data){
-              
-              const resultSearch = data.filter(function(item){
-                const name = item.name.toLowerCase()
-                return name.includes(value.toLowerCase( ))
-              })
+            getData(`./db/${link}`).then(function (data) {
+              const resultSearch = data.filter(function (item) {
+                const name = item.name.toLowerCase();
+                return name.includes(value.toLowerCase());
+              });
 
               containerPromo.classList.add("hide");
               restaurants.classList.add("hide");
@@ -283,8 +300,8 @@ function init() {
               restaurantPrice.textContent = ``;
               restaurantCategory.textContent = ``;
 
-              resultSearch.forEach(createCardGood)
-            })
+              resultSearch.forEach(createCardGood);
+            });
           });
         });
     }
