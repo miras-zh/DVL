@@ -24,6 +24,7 @@ const restaurantRating = document.querySelector(".rating");
 const restaurantPrice = document.querySelector(".price");
 const restaurantCategory = document.querySelector(".category");
 const inputSearch = document.querySelector(".input-search");
+const modalBody = document.querySelector(".modal-body");
 
 const cart = [];
 
@@ -223,35 +224,56 @@ function openGoods(event) {
 function addToCart(event) {
   const targety = event.target;
   const buttonAddToCart = targety.closest(".button-add-cart");
-
   if (buttonAddToCart) {
     const card = targety.closest(".card");
     const title = card.querySelector(".card-title-reg").textContent;
     const cost = card.querySelector(".card-price").textContent;
     const id = buttonAddToCart.id;
-
     const food = cart.find(function (item) {
       return item.id === id;
     });
-    console.log(food);
-    cart.push({
-      id: id,
-      title: title,
-      cost: cost,
-      count: 1,
-    });
-    console.log(id, title, cost);
-    console.log(cart);
+
+    if (food) {
+      food.count += 1;
+    } else {
+      cart.push({
+        id,
+        title,
+        cost,
+        count: 1,
+      });
+    }
   }
 }
 
-///------------------------------------------------------------------------------------------
+function renderCart() {
+  modalBody.textContent = "";
+  cart.forEach(function ({ id, title, cost, count }) {
+    const itemCart = `
+      <div class="food-row">
+            <span class="food-name">${title}</span>
+            <strong class="food-price">${cost}</strong>
+            <div class="food-counter">
+              <button class="counter-button">-</button>
+              <span class="counter">${count}</span>
+              <button class="counter-button">+</button>
+            </div>
+          </div>
+        </div>`;
+
+    modalBody.insertAdjacentHTML("beforeend", itemCart);
+  });
+}
+//------------------------------------------------------------------------------------------
 function init() {
   getData("./db/partners.json").then(function (data) {
     data.forEach(createCardReastaurant);
   });
 
-  cartButton.addEventListener("click", toggleModal);
+  cartButton.addEventListener("click", function () {
+    renderCart();
+    toggleModal();
+  });
   cardsMenu.addEventListener("click", addToCart);
   close.addEventListener("click", toggleModal);
   cardsRestaurants.addEventListener("click", openGoods);
