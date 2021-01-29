@@ -166,6 +166,7 @@ function createCardReastaurant({
 
 function createCardGood({ name, description, id, price, image }) {
   const card = document.createElement("div");
+  card.id = id;
   card.className = "card";
   card.insertAdjacentHTML(
     "beforeend",
@@ -179,11 +180,11 @@ function createCardGood({ name, description, id, price, image }) {
                   <div class="ingredients">${description}</div>
                 </div>
                 <div class="card-buttons">
-                  <button class="button button-primary button-add-cart">
+                  <button class="button button-primary button-add-cart" id="${id}"
                     <span class="button-card-text">В корзину</span>
                     <span class="button-cart-svg"></span>
                   </button>
-                  <strong class="card-price-bold">${price} T</strong>
+                  <strong class="card-price card-price-bold">${price} T</strong>
                 </div>
               </div>
     `,
@@ -197,8 +198,6 @@ function openGoods(event) {
   if (login) {
     const restaurant = target.closest(".card-restaurant");
     if (restaurant) {
-      console.dir(restaurant);
-
       containerPromo.classList.add("hide");
       restaurants.classList.add("hide");
       menu.classList.remove("hide");
@@ -224,9 +223,29 @@ function openGoods(event) {
 function addToCart(event) {
   const targety = event.target;
   const buttonAddToCart = targety.closest(".button-add-cart");
-  console.log(buttonAddToCart);
+
+  if (buttonAddToCart) {
+    const card = targety.closest(".card");
+    const title = card.querySelector(".card-title-reg").textContent;
+    const cost = card.querySelector(".card-price").textContent;
+    const id = buttonAddToCart.id;
+
+    const food = cart.find(function (item) {
+      return item.id === id;
+    });
+    console.log(food);
+    cart.push({
+      id: id,
+      title: title,
+      cost: cost,
+      count: 1,
+    });
+    console.log(id, title, cost);
+    console.log(cart);
+  }
 }
 
+///------------------------------------------------------------------------------------------
 function init() {
   getData("./db/partners.json").then(function (data) {
     data.forEach(createCardReastaurant);

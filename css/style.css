@@ -432,10 +432,10 @@ button {
 }
 
 .modal-dialog {
-    max-width: 780px;
+    max-width: 770px;
     width: 95%;
-    background: #ffffff;
-    border-radius: 5px;
+    background: #f8f3f3;
+    border-radius: 45px;
     margin: auto;
     padding: 40px 45px;
 }
