@@ -25,6 +25,8 @@ const restaurantPrice = document.querySelector(".price");
 const restaurantCategory = document.querySelector(".category");
 const inputSearch = document.querySelector(".input-search");
 const modalBody = document.querySelector(".modal-body");
+const modalPricetag = document.querySelector('.modal-pricetag');
+const buttonClearCart = document.querySelector(".clear-cart");
 
 const cart = [];
 
@@ -254,15 +256,48 @@ function renderCart() {
             <span class="food-name">${title}</span>
             <strong class="food-price">${cost}</strong>
             <div class="food-counter">
-              <button class="counter-button">-</button>
+              <button class="counter-button counter-minus" data-id="${id}">-</button>
               <span class="counter">${count}</span>
-              <button class="counter-button">+</button>
+              <button class="counter-button counter-plus" data-id="${id}">+</button>
             </div>
           </div>
         </div>`;
 
     modalBody.insertAdjacentHTML("beforeend", itemCart);
   });
+  const totalPrice = cart.reduce(function(result,item){//array
+    return result + (parseFloat(item.cost)*item.count);
+  },0)
+
+  modalPricetag.textContent = totalPrice + ' T';
+
+
+}
+
+function changeCount (event){
+  const target = event.target;
+  if(target.classList.contains('counter-minus')){
+      const food = cart.find(function(item){
+        return item.id === target.dataset.id;
+      });
+      food.count--;
+      renderCart()
+      if(food.count < 1){
+        const index = cart.indexOf(food);
+        if(index>-1){
+          cart.splice(index,1)
+        }
+        renderCart()
+      }
+  }
+  if(target.classList.contains('counter-plus')){
+    const food = cart.find(function(item){
+      return item.id === target.dataset.id;
+    });
+    food.count++;
+    renderCart()
+  }
+  
 }
 //------------------------------------------------------------------------------------------
 function init() {
@@ -274,6 +309,12 @@ function init() {
     renderCart();
     toggleModal();
   });
+  buttonClearCart.addEventListener('click',function(){
+    cart.length = 0;
+    renderCart();
+     toggleModal();
+  })
+  modalBody.addEventListener('click',changeCount)
   cardsMenu.addEventListener("click", addToCart);
   close.addEventListener("click", toggleModal);
   cardsRestaurants.addEventListener("click", openGoods);
