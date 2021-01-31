@@ -51,6 +51,13 @@ function saveCart(){
   localStorage.setItem(`delivery_${login}`,JSON.stringify(cart))
 }
 
+function downloadCart(){
+  if(localStorage.getItem(`delivery_${login}`)){
+    const data = JSON.parse(localStorage.getItem(`delivery_${login}`))
+    cart.push(...data)
+  }
+}
+
 const getData = async function (url) {
   const response = await fetch(url);
   if (!response.ok) {
@@ -100,6 +107,7 @@ function authorized() {
     outButton.style.display = "";
     cartButton.style.display = "";
     outButton.removeEventListener("click", logOut);
+    cart.length = 0;
     chekcAuth();
     returnMain()
   }
@@ -121,6 +129,7 @@ function notAuthorized() {
       localStorage.setItem("DVLStorage", login);
       localStorage.setItem("f.login", JSON.stringify(login));
       toggleModalAuth();
+      downloadCart();
       authButton.removeEventListener("click", toggleModalAuth);
       closeButtonAuth.removeEventListener("click", toggleModalAuth);
       loginForm.removeEventListener("submit", logIn);
@@ -301,7 +310,7 @@ function renderCart() {
   },0)
 
   modalPricetag.textContent = totalPrice + ' T';
-
+  saveCart()
 
 }
 
@@ -344,6 +353,7 @@ function init() {
     cart.length = 0;
     renderCart();
      toggleModal();
+     saveCart()
   })
   modalBody.addEventListener('click',changeCount)
   cardsMenu.addEventListener("click", addToCart);
