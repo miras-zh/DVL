@@ -45,7 +45,11 @@ const modalBody = document.querySelector(".modal-body");
 const modalPricetag = document.querySelector('.modal-pricetag');
 const buttonClearCart = document.querySelector(".clear-cart");
 
-const cart = [];
+const cart = JSON.parse(localStorage.getItem(`delivery_${login}`)) || [];
+
+function saveCart(){
+  localStorage.setItem(`delivery_${login}`,JSON.stringify(cart))
+}
 
 const getData = async function (url) {
   const response = await fetch(url);
@@ -271,6 +275,7 @@ function addToCart(event) {
         count: 1,
       });
     }
+    saveCart()
   }
 }
 
@@ -383,7 +388,7 @@ function init() {
               });
 
               containerPromo.classList.add("hide");
-              swiper.destroy(false)
+              swiper.destroy(false) // нужно передавать false
               restaurants.classList.add("hide");
               menu.classList.remove("hide");
 
