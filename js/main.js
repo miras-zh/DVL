@@ -1,5 +1,22 @@
 "use strict";
-
+const swiper = new Swiper(".swiper-container", {
+  sliderPerView: 1,
+  loop: true,
+  autoplay: true,
+  grabCursor: true,
+  /*pagination: {
+  el: ".swiper-pagination",
+  clickable: true,
+},*/
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  scrollbar: {
+    el: ".swiper-scrollbar",
+    draggable: true,
+  },
+});
 const cartButton = document.querySelector("#cart-button");
 const modal = document.querySelector(".modal");
 const close = document.querySelector(".close");
@@ -62,6 +79,13 @@ function clearForm() {
   loginInput.style.borderColor = "";
 }
 
+function returnMain(){
+  containerPromo.classList.remove('hide')
+  restaurants.classList.remove('hide')
+  menu.classList.add('hide')
+  swiper.init()
+}
+
 function authorized() {
   function logOut() {
     login = null;
@@ -73,6 +97,7 @@ function authorized() {
     cartButton.style.display = "";
     outButton.removeEventListener("click", logOut);
     chekcAuth();
+    returnMain()
   }
   userName.textContent = login;
   authButton.style.display = "none";
@@ -202,6 +227,7 @@ function openGoods(event) {
     const restaurant = target.closest(".card-restaurant");
     if (restaurant) {
       containerPromo.classList.add("hide");
+      swiper.destroy(false);
       restaurants.classList.add("hide");
       menu.classList.remove("hide");
       cardsMenu.textContent = "";
@@ -322,30 +348,13 @@ function init() {
     containerPromo.classList.remove("hide");
     restaurants.classList.remove("hide");
     menu.classList.add("hide");
+    swiper.init()
   });
 
   chekcAuth();
 
   //slider
-  new Swiper(".swiper-container", {
-    sliderPerView: 1,
-    loop: true,
-    autoplay: true,
-    grabCursor: true,
-    /*pagination: {
-    el: ".swiper-pagination",
-    clickable: true,
-  },*/
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    scrollbar: {
-      el: ".swiper-scrollbar",
-      draggable: true,
-    },
-  });
-
+  
   inputSearch.addEventListener("keypress", function (event) {
     console.log(event);
     if (event.charCode === 13) {
@@ -374,6 +383,7 @@ function init() {
               });
 
               containerPromo.classList.add("hide");
+              swiper.destroy(false)
               restaurants.classList.add("hide");
               menu.classList.remove("hide");
 
