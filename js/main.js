@@ -41,20 +41,21 @@ const restaurantRating = document.querySelector(".rating");
 const restaurantPrice = document.querySelector(".price");
 const restaurantCategory = document.querySelector(".category");
 const inputSearch = document.querySelector(".input-search");
+const inputMain = document.querySelector(".input-address");
 const modalBody = document.querySelector(".modal-body");
-const modalPricetag = document.querySelector('.modal-pricetag');
+const modalPricetag = document.querySelector(".modal-pricetag");
 const buttonClearCart = document.querySelector(".clear-cart");
 
 const cart = JSON.parse(localStorage.getItem(`delivery_${login}`)) || [];
 
-function saveCart(){
-  localStorage.setItem(`delivery_${login}`,JSON.stringify(cart))
+function saveCart() {
+  localStorage.setItem(`delivery_${login}`, JSON.stringify(cart));
 }
 
-function downloadCart(){
-  if(localStorage.getItem(`delivery_${login}`)){
-    const data = JSON.parse(localStorage.getItem(`delivery_${login}`))
-    cart.push(...data)
+function downloadCart() {
+  if (localStorage.getItem(`delivery_${login}`)) {
+    const data = JSON.parse(localStorage.getItem(`delivery_${login}`));
+    cart.push(...data);
   }
 }
 
@@ -90,11 +91,11 @@ function clearForm() {
   loginInput.style.borderColor = "";
 }
 
-function returnMain(){
-  containerPromo.classList.remove('hide')
-  restaurants.classList.remove('hide')
-  menu.classList.add('hide')
-  swiper.init()
+function returnMain() {
+  containerPromo.classList.remove("hide");
+  restaurants.classList.remove("hide");
+  menu.classList.add("hide");
+  swiper.init();
 }
 
 function authorized() {
@@ -109,7 +110,7 @@ function authorized() {
     outButton.removeEventListener("click", logOut);
     cart.length = 0;
     chekcAuth();
-    returnMain()
+    returnMain();
   }
   userName.textContent = login;
   authButton.style.display = "none";
@@ -284,7 +285,7 @@ function addToCart(event) {
         count: 1,
       });
     }
-    saveCart()
+    saveCart();
   }
 }
 
@@ -305,39 +306,38 @@ function renderCart() {
 
     modalBody.insertAdjacentHTML("beforeend", itemCart);
   });
-  const totalPrice = cart.reduce(function(result,item){//array
-    return result + (parseFloat(item.cost)*item.count);
-  },0)
+  const totalPrice = cart.reduce(function (result, item) {
+    //array
+    return result + parseFloat(item.cost) * item.count;
+  }, 0);
 
-  modalPricetag.textContent = totalPrice + ' T';
-  saveCart()
-
+  modalPricetag.textContent = totalPrice + " T";
+  saveCart();
 }
 
-function changeCount (event){
+function changeCount(event) {
   const target = event.target;
-  if(target.classList.contains('counter-minus')){
-      const food = cart.find(function(item){
-        return item.id === target.dataset.id;
-      });
-      food.count--;
-      renderCart()
-      if(food.count < 1){
-        const index = cart.indexOf(food);
-        if(index>-1){
-          cart.splice(index,1)
-        }
-        renderCart()
+  if (target.classList.contains("counter-minus")) {
+    const food = cart.find(function (item) {
+      return item.id === target.dataset.id;
+    });
+    food.count--;
+    renderCart();
+    if (food.count < 1) {
+      const index = cart.indexOf(food);
+      if (index > -1) {
+        cart.splice(index, 1);
       }
+      renderCart();
+    }
   }
-  if(target.classList.contains('counter-plus')){
-    const food = cart.find(function(item){
+  if (target.classList.contains("counter-plus")) {
+    const food = cart.find(function (item) {
       return item.id === target.dataset.id;
     });
     food.count++;
-    renderCart()
+    renderCart();
   }
-  
 }
 //------------------------------------------------------------------------------------------
 function init() {
@@ -349,13 +349,13 @@ function init() {
     renderCart();
     toggleModal();
   });
-  buttonClearCart.addEventListener('click',function(){
+  buttonClearCart.addEventListener("click", function () {
     cart.length = 0;
     renderCart();
-     toggleModal();
-     saveCart()
-  })
-  modalBody.addEventListener('click',changeCount)
+    toggleModal();
+    saveCart();
+  });
+  modalBody.addEventListener("click", changeCount);
   cardsMenu.addEventListener("click", addToCart);
   close.addEventListener("click", toggleModal);
   cardsRestaurants.addEventListener("click", openGoods);
@@ -363,14 +363,14 @@ function init() {
     containerPromo.classList.remove("hide");
     restaurants.classList.remove("hide");
     menu.classList.add("hide");
-    swiper.init()
+    swiper.init();
   });
 
   chekcAuth();
 
   //slider
-  
-  inputSearch.addEventListener("keypress", function (event) {
+
+  inputSearch.addEventListener("keyup", function (event) {
     console.log(event);
     if (event.charCode === 13) {
       const value = event.target.value.trim();
@@ -398,7 +398,7 @@ function init() {
               });
 
               containerPromo.classList.add("hide");
-              swiper.destroy(false) // нужно передавать false
+              swiper.destroy(false); // нужно передавать false
               restaurants.classList.add("hide");
               menu.classList.remove("hide");
 
@@ -412,6 +412,48 @@ function init() {
           });
         });
     }
+  });
+
+  inputMain.addEventListener("keyup", function (event) {
+    console.log(event);
+    const value = event.target.value.trim();
+    if (!value) {
+      event.target.style.backgroundColor = "red";
+      event.target.value = "";
+      setTimeout(function () {
+        event.target.style.backgroundColor = "";
+      }, 900);
+      return;
+    }
+    getData("./db/partners.json")
+      .then(function (data) {
+        return data.map(function (part) {
+          return part.products;
+        });
+      })
+      .then(function (linksPorduct) {
+        cardsMenu.textContent = "";
+        linksPorduct.forEach(function (link) {
+          getData(`./db/${link}`).then(function (data) {
+            const resultSearch = data.filter(function (item) {
+              const name = item.name.toLowerCase();
+              return name.includes(value.toLowerCase());
+            });
+
+            containerPromo.classList.add("hide");
+            swiper.destroy(false); // нужно передавать false
+            restaurants.classList.add("hide");
+            menu.classList.remove("hide");
+
+            restaurantTitle.textContent = `Результат Поиска`;
+            restaurantRating.textContent = ``;
+            restaurantPrice.textContent = ``;
+            restaurantCategory.textContent = ``;
+
+            resultSearch.forEach(createCardGood);
+          });
+        });
+      });
   });
 }
 
