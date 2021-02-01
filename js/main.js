@@ -417,7 +417,7 @@ function init() {
   inputMain.addEventListener("keyup", function (event) {
     console.log(event);
     const value = event.target.value.trim();
-    if (!value) {
+    if (!value && event.charCode === 13) {
       event.target.style.backgroundColor = "red";
       event.target.value = "";
       setTimeout(function () {
@@ -425,6 +425,11 @@ function init() {
       }, 900);
       return;
     }
+
+    if (!/^[А-Яа-яЁё]$/.test(event.key)) {
+      return;
+    }
+
     getData("./db/partners.json")
       .then(function (data) {
         return data.map(function (part) {
