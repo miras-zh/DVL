@@ -341,7 +341,7 @@ function changeCount(event) {
 }
 //------------------------------------------------------------------------------------------
 function init() {
-  getData("./db/partners.json").then(function (data) {
+  getData("./db/bd.json").then(function (data) {
     data.forEach(createCardReastaurant);
   });
 
@@ -430,7 +430,7 @@ function init() {
       return;
     }
 
-    getData("./db/partners.json")
+    getData("./db/bd.json")
       .then(function (data) {
         return data.map(function (part) {
           return part.products;

@@ -1,0 +1,83 @@
+[
+  {
+    "name": "Servers",
+    "time_of_delivery": 50,
+    "stars": 4.5,
+    "price": 900,
+    "kitchen": "серверы",
+    "image": "img/servers/preview.jpg",
+    "products": "servers.json"
+  },
+  {
+    "name": "Computers",
+    "time_of_delivery": 60,
+    "stars": 4.3,
+    "price": 1200,
+    "kitchen": "ПК Моноблоки Нетбуки",
+    "image": "img/pc/preview.jpg",
+    "products": "computers.json"
+  },
+  {
+    "name": "Laptop",
+    "time_of_delivery": 40,
+    "stars": 4.4,
+    "price": 450,
+    "kitchen": "Ноутбуки Ультрабуки",
+    "image": "img/laptop/preview.jpg",
+    "products": "laptop.json"
+  },
+  {
+    "name": "HDD SSD",
+    "time_of_delivery": 55,
+    "stars": 4.1,
+    "price": 500,
+    "kitchen": "Жесткие диски, Накопители, Флэш карты",
+    "image": "img/palki-skalki/preview.jpg",
+    "products": "hard.json"
+  },
+  {
+    "name": "RAM",
+    "time_of_delivery": 75,
+    "stars": 4.7,
+    "price": 1000,
+    "kitchen": "Оперативная память",
+    "image": "img/gusi-lebedi/preview.jpg",
+    "products": "ram.json"
+  },
+  {
+    "name": "CPU",
+    "time_of_delivery": 45,
+    "stars": 4.6,
+    "price": 700,
+    "kitchen": "Процессоры",
+    "image": "img/pizza-burger/preview.jpg",
+    "products": "cpu.json"
+  },
+  {
+    "name": "Корпуса Кейсы",
+    "time_of_delivery": 45,
+    "stars": 4.6,
+    "price": 700,
+    "kitchen": "боксы",
+    "image": "img/pizza-burger/preview.jpg",
+    "products": "cpu.json"
+  },
+{
+    "name": "Кабеля",
+    "time_of_delivery": 45,
+    "stars": 4.6,
+    "price": 700,
+    "kitchen": "питание видео аудио",
+    "image": "img/pizza-burger/preview.jpg",
+    "products": "cpu.json"
+  },
+{
+    "name": "Аксессуары",
+    "time_of_delivery": 45,
+    "stars": 4.6,
+    "price": 700,
+    "kitchen": "Наушники Мышь Клавиатура",
+    "image": "img/pizza-burger/preview.jpg",
+    "products": "cpu.json"
+  }
+]
