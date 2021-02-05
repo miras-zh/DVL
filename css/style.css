@@ -177,11 +177,11 @@ button {
 }
 
 .pizza {
-    background: #fff1b8 url(../img/promo/pizza.png) no-repeat top -100px right -250px / 830px
+    background: #d8fdfb url(../img/promo/server1.png) no-repeat top -60px right -200px / 830px
 }
 
 .kebab {
-    background: #D6E4FF url(../img/promo/kebab.png) no-repeat top 45px right 40px / 450px;
+    background: #ecf7e7 url(../img/promo/tg.png) no-repeat top 20px right 5px / 600px;
 }
 
 .vegetables {
