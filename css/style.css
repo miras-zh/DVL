@@ -177,19 +177,19 @@ button {
 }
 
 .pizza {
-    background: #d8fdfb url(../img/promo/server1.png) no-repeat top -60px right -200px / 830px
+    background: #f0f1f1 url(../img/promo/server1.png) no-repeat top -60px right -200px / 830px
 }
 
 .kebab {
-    background: #ecf7e7 url(../img/promo/tg.png) no-repeat top 20px right 5px / 600px;
+    background: #fafdff  url(../img/promo/tg.png) no-repeat top 20px right 5px / 600px;
 }
 
 .vegetables {
-    background: #FFF566 url(../img/promo/vegetables.png) no-repeat top 0 right 0 / 825px
+    background: #f0f1f1 url(../img/promo/pc.png) no-repeat top 0 right 0 / 600px
 }
 
 .sushi {
-    background: #FFF1F0 url(../img/promo/sushi.png) no-repeat top 10px right 15px / 500px
+    background: #fafdff url(../img/promo/pl.png) no-repeat top 10px right 35px / 600px
 }
 
 .promo-title {
@@ -246,7 +246,7 @@ button {
 
 }
 
-.card-restaurant {
+.cat-shop {
     cursor: pointer
 }
 
@@ -266,7 +266,7 @@ button {
 
 
 
-.restaurants .card-text {
+.categories .card-text {
     min-height: auto;
 }
 
@@ -323,10 +323,11 @@ button {
 .rating {
     background-image: url("../img/icon/rating.svg");
     background-repeat: no-repeat;
-    background-position: 0 7px;
+    background-position: 0 1px;
+    background-size:20%;
     padding-left: 20px;
     margin-right: 26px;
-    color: #ffc107;
+    color: #929292;
     font-weight: bold;
     font-size: 18px;
     line-height: 32px;

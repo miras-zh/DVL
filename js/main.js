@@ -29,17 +29,17 @@ const loginInput = document.querySelector("#login");
 const passwordInput = document.querySelector("#password");
 const userName = document.querySelector(".user-name");
 const outButton = document.querySelector(".button-out");
-const cardsRestaurants = document.querySelector(".cards-restaurants");
+const cardsShop = document.querySelector(".cards-shop");
 const containerPromo = document.querySelector(".container-promo");
-const restaurants = document.querySelector(".restaurants");
+const categories = document.querySelector(".categories");
 const menu = document.querySelector(".menu");
 const logo = document.querySelector(".logo");
 const cardsMenu = document.querySelector(".cards-menu");
 
-const restaurantTitle = document.querySelector(".restaurant-title");
-const restaurantRating = document.querySelector(".rating");
-const restaurantPrice = document.querySelector(".price");
-const restaurantCategory = document.querySelector(".category");
+const shopTitle = document.querySelector(".restaurant-title");
+const shopRating = document.querySelector(".rating");
+const shopPrice = document.querySelector(".price");
+const shopCategory = document.querySelector(".category");
 const inputSearch = document.querySelector(".input-search");
 const inputMain = document.querySelector(".input-address");
 const modalBody = document.querySelector(".modal-body");
@@ -93,7 +93,7 @@ function clearForm() {
 
 function returnMain() {
   containerPromo.classList.remove("hide");
-  restaurants.classList.remove("hide");
+  categories.classList.remove("hide");
   menu.classList.add("hide");
   swiper.init();
 }
@@ -171,7 +171,7 @@ function chekcAuth() {
   }
 }
 
-function createCardReastaurant({
+function createCardShop({
   image,
   kitchen,
   name,
@@ -181,7 +181,7 @@ function createCardReastaurant({
   time_of_delivery,
 }) {
   const cardRest = document.createElement("a");
-  cardRest.className = "card card-restaurant";
+  cardRest.className = "card cat-shop";
   cardRest.products = products;
   cardRest.info = { kitchen, name, price, stars };
 
@@ -191,7 +191,7 @@ function createCardReastaurant({
                 <!-- / card heading -->
                 <div class="card-heading">
                   <h3 class="card-title">${name}</h3>
-                  <span class="card-tag tag">${time_of_delivery}мин</span>
+                  <span class="card-tag tag">${time_of_delivery}дней</span>
                 </div>
                 <!--card info -->
                 <div class="card-info">
@@ -203,7 +203,7 @@ function createCardReastaurant({
   `;
 
   cardRest.insertAdjacentHTML("beforeend", card);
-  cardsRestaurants.insertAdjacentElement("beforeend", cardRest);
+  cardsShop.insertAdjacentElement("beforeend", cardRest);
 }
 
 function createCardGood({ name, description, id, price, image }) {
@@ -238,23 +238,23 @@ function openGoods(event) {
   const target = event.target;
 
   if (login) {
-    const restaurant = target.closest(".card-restaurant");
-    if (restaurant) {
+    const shop = target.closest(".cat-shop");
+    if (shop) {
       containerPromo.classList.add("hide");
       swiper.destroy(false);
-      restaurants.classList.add("hide");
+      categories.classList.add("hide");
       menu.classList.remove("hide");
       cardsMenu.textContent = "";
 
-      const { name, kitchen, price, stars } = restaurant.info;
+      const { name, kitchen, price, stars } = shop.info;
 
-      restaurantTitle.textContent = `${restaurant.info.name}`;
-      restaurantRating.textContent = `${restaurant.info.stars}`;
-      restaurantPrice.textContent = `От ${restaurant.info.price} Т`;
-      restaurantCategory.textContent = `${restaurant.info.kitchen}`;
+      shopTitle.textContent = `${shop.info.name}`;
+      shopRating.textContent = `${shop.info.stars}`;
+      shopPrice.textContent = `От ${shop.info.price} Т`;
+      shopCategory.textContent = `${shop.info.kitchen}`;
       //location.hash = `#${name}`;
 
-      getData(`./db/${restaurant.products}`).then(function (data) {
+      getData(`./db/${shop.products}`).then(function (data) {
         data.forEach(createCardGood);
       });
     }
@@ -342,7 +342,7 @@ function changeCount(event) {
 //------------------------------------------------------------------------------------------
 function init() {
   getData("./db/bd.json").then(function (data) {
-    data.forEach(createCardReastaurant);
+    data.forEach(createCardShop);
   });
 
   cartButton.addEventListener("click", function () {
@@ -358,10 +358,10 @@ function init() {
   modalBody.addEventListener("click", changeCount);
   cardsMenu.addEventListener("click", addToCart);
   close.addEventListener("click", toggleModal);
-  cardsRestaurants.addEventListener("click", openGoods);
+  cardsShop.addEventListener("click", openGoods);
   logo.addEventListener("click", function () {
     containerPromo.classList.remove("hide");
-    restaurants.classList.remove("hide");
+    categories.classList.remove("hide");
     menu.classList.add("hide");
     swiper.init();
   });
@@ -399,13 +399,13 @@ function init() {
 
               containerPromo.classList.add("hide");
               swiper.destroy(false); // нужно передавать false
-              restaurants.classList.add("hide");
+              categories.classList.add("hide");
               menu.classList.remove("hide");
 
-              restaurantTitle.textContent = `Результат Поиска`;
-              restaurantRating.textContent = ``;
-              restaurantPrice.textContent = ``;
-              restaurantCategory.textContent = ``;
+              shopTitle.textContent = `Результат Поиска`;
+              shopRating.textContent = ``;
+              shopPrice.textContent = ``;
+              shopCategory.textContent = ``;
 
               resultSearch.forEach(createCardGood);
             });
@@ -447,13 +447,13 @@ function init() {
 
             containerPromo.classList.add("hide");
             swiper.destroy(false); // нужно передавать false
-            restaurants.classList.add("hide");
+            categories.classList.add("hide");
             menu.classList.remove("hide");
 
-            restaurantTitle.textContent = `Результат Поиска`;
-            restaurantRating.textContent = ``;
-            restaurantPrice.textContent = ``;
-            restaurantCategory.textContent = ``;
+            shopTitle.textContent = `Результат Поиска`;
+            shopRating.textContent = ``;
+            shopPrice.textContent = ``;
+            shopCategory.textContent = ``;
 
             resultSearch.forEach(createCardGood);
           });
