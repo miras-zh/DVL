@@ -59,7 +59,7 @@
     "stars": 4.9,
     "price": 10000,
     "kitchen": "боксы",
-    "image": "img/pizza-burger/preview.jpg",
+    "image": "img/servers/preview.jpg",
     "products": "cpu.json"
   },
 {
@@ -68,7 +68,7 @@
     "stars": 4.6,
     "price": 700,
     "kitchen": "питание видео аудио",
-    "image": "img/pizza-burger/preview.jpg",
+    "image": "img/servers/preview.jpg",
     "products": "cpu.json"
   },
 {
@@ -77,7 +77,7 @@
     "stars": 4.6,
     "price": 700,
     "kitchen": "Наушники Мышь Клавиатура",
-    "image": "img/pizza-burger/preview.jpg",
+"image": "img/servers/preview.jpg",
     "products": "cpu.json"
   }
 ]

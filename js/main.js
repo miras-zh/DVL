@@ -68,10 +68,10 @@ const getData = async function (url) {
   return await response.json();
 };
 
-function validName(str) {
-  const regName = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/;
-  return regName.test(str);
-}
+// function validName(str) {
+//   const regName = /^[a-zA-Z0-9-_\.]{1,20}$/;
+//   return regName.test(str);
+// }
 
 function toggleModal() {
   modal.classList.toggle("is-open");
@@ -125,7 +125,7 @@ function notAuthorized() {
   function logIn(event) {
     event.preventDefault();
     loginInput.style.borderColor = "";
-    if (validName(loginInput.value)) {
+    if (loginInput.value) {
       login = loginInput.value;
       localStorage.setItem("DVLStorage", login);
       localStorage.setItem("f.login", JSON.stringify(login));
@@ -229,7 +229,7 @@ function createCardGood({ name, description, id, price, image }) {
                   <strong class="card-price card-price-bold">${price} T</strong>
                 </div>
               </div>
-    `,
+    `
   );
   cardsMenu.insertAdjacentElement("beforeend", card);
 }
